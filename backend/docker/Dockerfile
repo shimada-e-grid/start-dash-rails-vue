@@ -1,4 +1,4 @@
-FROM ruby:3.0-slim
+FROM ruby:2.7.4-slim
 
 WORKDIR /home/app/start-dash-rails-vue
 

@@ -1,0 +1,21 @@
+require:
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-performance
+
+Rails/DynamicFindBy:
+  Whitelist:
+    - find_by_number
+
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*"
+
+Rails:
+  Enabled: true
+
+RSpec/MultipleExpectations:
+  Max: 2
+
+Style/Documentation:
+  Enabled: false
