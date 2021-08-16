@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
+  country = Country.new.all.sample
   factory :country do
-    number { 392 }
-    name { 'Japan' }
+    number { country.number }
+    name { country.name }
   end
 end

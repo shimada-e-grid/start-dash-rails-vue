@@ -3,16 +3,11 @@
 FactoryBot.define do
   factory :team do
     association :league
-    name { 'testteam' }
+    name { Faker::Sports::Football.team }
   end
 
   factory :invalid_team, class: :team do
     association :league
-    name {}
-  end
-
-  factory :new_team, class: :team do
-    association :league
-    name { 'testnewteam' }
+    name { nil }
   end
 end

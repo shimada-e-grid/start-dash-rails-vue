@@ -2,17 +2,12 @@
 
 FactoryBot.define do
   factory :league do
-    name { 'testleague' }
+    name { Faker::Team.unique.name }
     country_number { attributes_for(:country)[:number] }
   end
 
   factory :invalid_league, class: :league do
-    name {}
-    country_number {}
-  end
-
-  factory :new_league, class: :league do
-    name { 'testnewleague' }
-    country_number { attributes_for(:country)[:number] }
+    name { nil }
+    country_number { nil }
   end
 end

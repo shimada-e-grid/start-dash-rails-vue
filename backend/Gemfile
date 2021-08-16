@@ -29,6 +29,7 @@ group :development, :test do
   gem 'brakeman', require: false
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
+  gem 'faker', require: false
   gem 'rspec-rails', '~> 5.0.0'
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
@@ -41,6 +42,7 @@ group :development do
 end
 
 group :test do
+  gem 'committee-rails', require: false
   gem 'shoulda-matchers', '~> 5.0', require: false
   gem 'simplecov', require: false
 end

@@ -17,8 +17,8 @@ RSpec.describe Country, type: :model do
       expect(described_class.new.find_by_number(392)).to have_attributes(number: 392, name: 'Japan')
     end
 
-    it 'returns empty hash when not exist country number argument' do
-      expect(described_class.new.find_by_number(123)).not_to include(:number) && include(:name)
+    it 'returns raise error ActiveRecord::RecordNotFound' do
+      expect { described_class.new.find_by_number(123) }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end

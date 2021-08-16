@@ -7,6 +7,7 @@ require File.expand_path('../config/environment', __dir__)
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
 require 'shoulda-matchers'
+require 'committee/rails'
 
 begin
   ActiveRecord::Migration.maintain_test_schema!
@@ -25,6 +26,15 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
 
   config.include FactoryBot::Syntax::Methods
+
+  config.include Committee::Rails::Test::Methods
+  config.add_setting :committee_options
+  config.committee_options = {
+    schema_path: Rails.root.join('docs/openapi.yml').to_s,
+    query_hash_key: 'rack.request.query_hash',
+    parse_response_by_content_type: false,
+    prefix: '/api/v1'
+  }
 end
 
 Shoulda::Matchers.configure do |config|

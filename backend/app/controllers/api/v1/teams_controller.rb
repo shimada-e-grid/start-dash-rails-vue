@@ -24,7 +24,7 @@ module Api
         if @team.save
           render json: @team, status: :created
         else
-          render json: @team.errors, status: :unprocessable_entity
+          render json: { messages: @team.errors.messages }, status: :unprocessable_entity
         end
       end
 
@@ -33,7 +33,7 @@ module Api
         if @team.update(team_params)
           render json: @team, status: :ok
         else
-          render json: @team.errors, status: :unprocessable_entity
+          render json: { messages: @team.errors.messages }, status: :unprocessable_entity
         end
       end
 

@@ -21,7 +21,7 @@ module Api
 
       # Use callbacks to share common setup or constraints between actions.
       def set_country
-        @country = Country.new.find_by_number(number: params[:number])
+        @country = Country.new.find_by_number(params[:number])
       end
     end
   end

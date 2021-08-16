@@ -3,6 +3,9 @@ require:
   - rubocop-rspec
   - rubocop-performance
 
+AllCops:
+  TargetRubyVersion: 2.7
+
 Rails/DynamicFindBy:
   Whitelist:
     - find_by_number
@@ -16,6 +19,9 @@ Rails:
 
 RSpec/MultipleExpectations:
   Max: 2
+
+RSpec/NestedGroups:
+  Max: 4
 
 Style/Documentation:
   Enabled: false

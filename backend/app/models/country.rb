@@ -16,10 +16,10 @@ class Country
   def find_by_number(number)
     hash = ActiveSupport::OrderedOptions.new
     country = ISO3166::Country.find_country_by_number(number)
-    if country
-      hash.number = country.number.to_i
-      hash.name = country.name
-    end
+    raise ActiveRecord::RecordNotFound, { messages: "Couldn't find Country with 'number'=#{number}" } if country.nil?
+
+    hash.number = country.number.to_i
+    hash.name = country.name
     hash
   end
 end

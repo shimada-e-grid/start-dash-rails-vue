@@ -24,7 +24,7 @@ module Api
         if @player.save
           render json: @player, status: :created
         else
-          render json: @player.errors, status: :unprocessable_entity
+          render json: { messages: @player.errors.messages }, status: :unprocessable_entity
         end
       end
 
@@ -33,7 +33,7 @@ module Api
         if @player.update(player_params)
           render json: @player, status: :ok
         else
-          render json: @player.errors, status: :unprocessable_entity
+          render json: { messages: @player.errors.messages }, status: :unprocessable_entity
         end
       end
 

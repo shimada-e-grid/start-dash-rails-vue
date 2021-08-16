@@ -5,39 +5,39 @@ module Api
     class LeaguesController < Api::ApplicationController
       before_action :set_league, only: %i[show update destroy]
 
-      # GET /api/v1//leagues
+      # GET /api/v1/leagues
       def index
         @leagues = League.all
 
         render json: @leagues
       end
 
-      # GET /api/v1//leagues/1
+      # GET /api/v1/leagues/1
       def show
         render json: @league
       end
 
-      # POST /api/v1//leagues
+      # POST /api/v1/leagues
       def create
         @league = League.new(league_params)
 
         if @league.save
           render json: @league, status: :created
         else
-          render json: @league.errors, status: :unprocessable_entity
+          render json: { messages: @league.errors.messages }, status: :unprocessable_entity
         end
       end
 
-      # PATCH/PUT /api/v1//leagues/1
+      # PATCH/PUT /api/v1/leagues/1
       def update
         if @league.update(league_params)
           render json: @league, status: :ok
         else
-          render json: @league.errors, status: :unprocessable_entity
+          render json: { messages: @league.errors.messages }, status: :unprocessable_entity
         end
       end
 
-      # DELETE /api/v1//leagues/1
+      # DELETE /api/v1/leagues/1
       def destroy
         @league.destroy
       end

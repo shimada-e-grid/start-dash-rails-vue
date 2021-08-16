@@ -1,0 +1,489 @@
+openapi: 3.0.0
+info:
+  title: Backend Rails API
+  description: ""
+  version: "1"
+servers:
+  - url: http://localhost:3000/api/{api_version}
+    description: local server
+    variables:
+      api_version:
+        default: v1
+        enum:
+          - v1
+paths:
+  /countries:
+    get:
+      tags:
+        - countries
+      operationId: getCountries
+      summary: List countries
+      responses:
+        "200":
+          description: List countries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Country"
+  "/countries/{number}":
+    get:
+      tags:
+        - countries
+      operationId: getCountry
+      summary: Get a Country
+      parameters:
+        - $ref: "#/components/parameters/CountryNumber"
+      responses:
+        "200":
+          description: A single country
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Country"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /leagues:
+    get:
+      tags:
+        - leagues
+      operationId: getLeagues
+      summary: List leagues
+      responses:
+        "200":
+          description: List leagues
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - $ref: "#/components/schemas/Id"
+                    - $ref: "#/components/schemas/League"
+                    - $ref: "#/components/schemas/Timestamp"
+    post:
+      tags:
+        - leagues
+      operationId: postLeague
+      summary: Create a league
+      requestBody:
+        $ref: "#/components/requestBodies/League"
+      responses:
+        "201":
+          description: Created a league
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Id"
+                  - $ref: "#/components/schemas/League"
+                  - $ref: "#/components/schemas/Timestamp"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
+  "/leagues/{id}":
+    get:
+      tags:
+        - leagues
+      operationId: getLeague
+      summary: Get a league
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: A single league
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Id"
+                  - $ref: "#/components/schemas/League"
+                  - $ref: "#/components/schemas/Timestamp"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    patch:
+      tags:
+        - leagues
+      operationId: patchLeague
+      summary: Update a league
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      requestBody:
+        $ref: "#/components/requestBodies/League"
+      responses:
+        "200":
+          description: Updated league
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Id"
+                  - $ref: "#/components/schemas/League"
+                  - $ref: "#/components/schemas/Timestamp"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
+    delete:
+      tags:
+        - leagues
+      operationId: deleteLeague
+      summary: Delete a league
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Deleted league
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Id"
+                  - $ref: "#/components/schemas/League"
+                  - $ref: "#/components/schemas/Timestamp"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /players:
+    get:
+      tags:
+        - players
+      operationId: getPlayers
+      summary: List players
+      responses:
+        "200":
+          description: List players
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - $ref: "#/components/schemas/Id"
+                    - $ref: "#/components/schemas/Player"
+                    - $ref: "#/components/schemas/Timestamp"
+    post:
+      tags:
+        - players
+      operationId: postPlayer
+      summary: Create a Player
+      requestBody:
+        $ref: "#/components/requestBodies/Player"
+      responses:
+        "201":
+          description: Created a Player
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Id"
+                  - $ref: "#/components/schemas/Player"
+                  - $ref: "#/components/schemas/Timestamp"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
+  "/players/{id}":
+    get:
+      tags:
+        - players
+      operationId: getPlayer
+      summary: Get a Player
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: A single Player
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Id"
+                  - $ref: "#/components/schemas/Player"
+                  - $ref: "#/components/schemas/Timestamp"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    patch:
+      tags:
+        - players
+      operationId: patchPlayer
+      summary: Update a Player
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      requestBody:
+        $ref: "#/components/requestBodies/Player"
+      responses:
+        "200":
+          description: Updated Player
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Id"
+                  - $ref: "#/components/schemas/Player"
+                  - $ref: "#/components/schemas/Timestamp"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
+    delete:
+      tags:
+        - players
+      operationId: deletePlayer
+      summary: Delete a Player
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Deleted Player
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Id"
+                  - $ref: "#/components/schemas/Player"
+                  - $ref: "#/components/schemas/Timestamp"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /teams:
+    get:
+      tags:
+        - teams
+      operationId: getteams
+      summary: List teams
+      responses:
+        "200":
+          description: List teams
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - $ref: "#/components/schemas/Id"
+                    - $ref: "#/components/schemas/Team"
+                    - $ref: "#/components/schemas/Timestamp"
+    post:
+      tags:
+        - teams
+      operationId: postTeams
+      summary: Create a Teams
+      requestBody:
+        $ref: "#/components/requestBodies/Team"
+      responses:
+        "201":
+          description: Created a Teams
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Id"
+                  - $ref: "#/components/schemas/Team"
+                  - $ref: "#/components/schemas/Timestamp"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
+  "/teams/{id}":
+    get:
+      tags:
+        - teams
+      operationId: getTeams
+      summary: Get a Teams
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: A single Teams
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Id"
+                  - $ref: "#/components/schemas/Team"
+                  - $ref: "#/components/schemas/Timestamp"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    patch:
+      tags:
+        - teams
+      operationId: patchTeams
+      summary: Update a Teams
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      requestBody:
+        $ref: "#/components/requestBodies/Team"
+      responses:
+        "200":
+          description: Updated Teams
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Id"
+                  - $ref: "#/components/schemas/Team"
+                  - $ref: "#/components/schemas/Timestamp"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
+    delete:
+      tags:
+        - teams
+      operationId: deleteTeams
+      summary: Delete a Teams
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Deleted Teams
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Id"
+                  - $ref: "#/components/schemas/Team"
+                  - $ref: "#/components/schemas/Timestamp"
+        "404":
+          $ref: "#/components/responses/NotFound"
+components:
+  parameters:
+    CountryNumber:
+      name: number
+      in: path
+      description: Country Number
+      required: true
+      schema:
+        type: integer
+        example: 392
+    Id:
+      name: id
+      in: path
+      description: ID
+      required: true
+      schema:
+        type: integer
+        format: int64
+        example: 1
+  schemas:
+    Id:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+          example: 1
+    Country:
+      type: object
+      required:
+        - number
+        - name
+      properties:
+        number:
+          type: integer
+          readOnly: true
+          example: 392
+        name:
+          type: string
+          readOnly: true
+          example: Japan
+    League:
+      type: object
+      required:
+        - name
+        - country_number
+      properties:
+        name:
+          type: string
+          example: Realmadrid
+        country_number:
+          type: integer
+          example: 34
+    Player:
+      type: object
+      required:
+        - team_id
+        - name
+        - birthday
+        - uniform_number
+        - country_number
+      properties:
+        team_id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+        birthday:
+          type: string
+          format: date
+        uniform_number:
+          type: integer
+        country_number:
+          type: integer
+    Team:
+      type: object
+      required:
+        - league_id
+        - name
+      properties:
+        league_id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+    Timestamp:
+      type: object
+      required:
+        - created_at
+        - updated_at
+      properties:
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+    Error:
+      type: object
+      required:
+        - messages
+      properties:
+        messages:
+          items:
+            oneOf:
+              - type: object
+              - type: string
+  requestBodies:
+    League:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/League"
+    Player:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Player"
+    Team:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Team"
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    UnprocessableEntity:
+      description: Unprocessable Entity
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
