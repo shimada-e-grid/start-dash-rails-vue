@@ -15,11 +15,8 @@ RSpec.describe Team, type: :model do
   end
 
   describe 'associations' do
-    let(:team) { build(:team) }
-
-    it 'belongs to league' do
-      expect(team).to belong_to(:league)
-    end
+    it { is_expected.to belong_to(:league) }
+    it { is_expected.to have_many(:players) }
   end
 
   describe 'attributes' do

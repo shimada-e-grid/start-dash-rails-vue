@@ -14,6 +14,10 @@ RSpec.describe League, type: :model do
     end
   end
 
+  describe 'associations' do
+    it { is_expected.to have_many(:teams) }
+  end
+
   describe 'attributes' do
     it 'has name' do
       expect(build(:league, name: 'abc123')).to have_attributes(name: 'abc123')

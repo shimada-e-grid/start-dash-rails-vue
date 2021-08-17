@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_16_090652) do
+ActiveRecord::Schema.define(version: 2021_08_17_082207) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2021_08_16_090652) do
   end
 
   create_table "players", force: :cascade do |t|
-    t.bigint "team_id", null: false
+    t.bigint "team_id"
     t.string "name", limit: 100, null: false
     t.date "birthday", null: false
     t.integer "uniform_number", null: false
@@ -32,6 +32,17 @@ ActiveRecord::Schema.define(version: 2021_08_16_090652) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["team_id", "uniform_number"], name: "index_players_on_team_id_and_uniform_number", unique: true
+  end
+
+  create_table "position_roles", force: :cascade do |t|
+    t.bigint "position_id", null: false
+    t.string "name", limit: 50, null: false
+    t.string "short_name", limit: 10, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_position_roles_on_name", unique: true
+    t.index ["position_id"], name: "index_position_roles_on_position_id"
+    t.index ["short_name"], name: "index_position_roles_on_short_name", unique: true
   end
 
   create_table "positions", force: :cascade do |t|
@@ -52,5 +63,6 @@ ActiveRecord::Schema.define(version: 2021_08_16_090652) do
   end
 
   add_foreign_key "players", "teams"
+  add_foreign_key "position_roles", "positions"
   add_foreign_key "teams", "leagues"
 end

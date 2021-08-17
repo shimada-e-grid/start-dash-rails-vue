@@ -242,11 +242,49 @@ paths:
                   - $ref: "#/components/schemas/Timestamp"
         "404":
           $ref: "#/components/responses/NotFound"
+  /position_roles:
+    get:
+      tags:
+        - position_roles
+      operationId: getPositionRoles
+      summary: List position roles
+      responses:
+        "200":
+          description: List position roles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - $ref: "#/components/schemas/Id"
+                    - $ref: "#/components/schemas/PositionRole"
+                    - $ref: "#/components/schemas/Timestamp"
+  "/position_roles/{id}":
+    get:
+      tags:
+        - position_roles
+      operationId: getPositionRole
+      summary: Get a position role
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: A single position role
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Id"
+                  - $ref: "#/components/schemas/PositionRole"
+                  - $ref: "#/components/schemas/Timestamp"
+        "404":
+          $ref: "#/components/responses/NotFound"
   /positions:
     get:
       tags:
         - positions
-      operationId: getpositions
+      operationId: getPositions
       summary: List positions
       responses:
         "200":
@@ -447,6 +485,7 @@ components:
         team_id:
           type: integer
           format: int64
+          nullable: true
           example: 1
         name:
           type: string
@@ -457,6 +496,21 @@ components:
           type: integer
         country_number:
           type: integer
+    PositionRole:
+      type: object
+      required:
+        - position_id
+        - name
+        - short_name
+      properties:
+        position_id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+        short_name:
+          type: string
     Position:
       type: object
       required:

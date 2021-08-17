@@ -9,7 +9,7 @@ RSpec.describe Player, type: :model do
     end
 
     describe 'columns' do
-      it { is_expected.to have_db_column(:team_id).of_type(:integer).with_options(null: false) }
+      it { is_expected.to have_db_column(:team_id).of_type(:integer).with_options(null: true) }
       it { is_expected.to have_db_column(:name).of_type(:string).with_options(limit: 100, null: false) }
       it { is_expected.to have_db_column(:birthday).of_type(:date).with_options(null: false) }
       it { is_expected.to have_db_column(:uniform_number).of_type(:integer).with_options(null: false) }
@@ -18,11 +18,7 @@ RSpec.describe Player, type: :model do
   end
 
   describe 'associations' do
-    let(:player) { build(:player) }
-
-    it 'belongs to team' do
-      expect(player).to belong_to(:team)
-    end
+    it { is_expected.to belong_to(:team) }
   end
 
   describe 'attributes' do
