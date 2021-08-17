@@ -242,6 +242,44 @@ paths:
                   - $ref: "#/components/schemas/Timestamp"
         "404":
           $ref: "#/components/responses/NotFound"
+  /positions:
+    get:
+      tags:
+        - positions
+      operationId: getpositions
+      summary: List positions
+      responses:
+        "200":
+          description: List positions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - $ref: "#/components/schemas/Id"
+                    - $ref: "#/components/schemas/Position"
+                    - $ref: "#/components/schemas/Timestamp"
+  "/positions/{id}":
+    get:
+      tags:
+        - positions
+      operationId: getPosition
+      summary: Get a position
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: A single position
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Id"
+                  - $ref: "#/components/schemas/Position"
+                  - $ref: "#/components/schemas/Timestamp"
+        "404":
+          $ref: "#/components/responses/NotFound"
   /teams:
     get:
       tags:
@@ -419,6 +457,16 @@ components:
           type: integer
         country_number:
           type: integer
+    Position:
+      type: object
+      required:
+        - name
+        - short_name
+      properties:
+        name:
+          type: string
+        short_name:
+          type: string
     Team:
       type: object
       required:
