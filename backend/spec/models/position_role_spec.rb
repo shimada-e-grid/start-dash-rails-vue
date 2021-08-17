@@ -30,30 +30,15 @@ RSpec.describe PositionRole, type: :model do
   end
 
   describe 'validations' do
-    let(:position_role) { build(:position_role) }
-
-    it 'requires name' do
-      expect(position_role).to validate_presence_of(:name)
+    before do
+      create(:position_role)
     end
 
-    it 'requires limit 100 name' do
-      expect(position_role).to validate_length_of(:name).is_at_most(50)
-    end
-
-    it 'requires unique name' do
-      expect(position_role).to validate_uniqueness_of(:name)
-    end
-
-    it 'requires short name' do
-      expect(position_role).to validate_presence_of(:short_name)
-    end
-
-    it 'requires limit 50 short name' do
-      expect(position_role).to validate_length_of(:short_name).is_at_most(10)
-    end
-
-    it 'requires unique short name' do
-      expect(position_role).to validate_uniqueness_of(:short_name)
-    end
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_length_of(:name).is_at_most(50) }
+    it { is_expected.to validate_uniqueness_of(:name) }
+    it { is_expected.to validate_presence_of(:short_name) }
+    it { is_expected.to validate_length_of(:short_name).is_at_most(10) }
+    it { is_expected.to validate_uniqueness_of(:short_name) }
   end
 end

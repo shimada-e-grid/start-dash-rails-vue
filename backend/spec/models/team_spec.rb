@@ -16,7 +16,7 @@ RSpec.describe Team, type: :model do
 
   describe 'associations' do
     it { is_expected.to belong_to(:league) }
-    it { is_expected.to have_many(:players) }
+    it { is_expected.to have_many(:players).dependent(:destroy) }
   end
 
   describe 'attributes' do
@@ -26,14 +26,11 @@ RSpec.describe Team, type: :model do
   end
 
   describe 'validations' do
-    let(:team) { build(:team) }
-
-    it 'requires name' do
-      expect(team).to validate_presence_of(:name)
+    before do
+      create(:team)
     end
 
-    it 'requires limit 100 name' do
-      expect(team).to validate_length_of(:name).is_at_most(100)
-    end
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_length_of(:name).is_at_most(100) }
   end
 end

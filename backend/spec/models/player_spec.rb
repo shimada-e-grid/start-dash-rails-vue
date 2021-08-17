@@ -9,7 +9,7 @@ RSpec.describe Player, type: :model do
     end
 
     describe 'columns' do
-      it { is_expected.to have_db_column(:team_id).of_type(:integer).with_options(null: true) }
+      it { is_expected.to have_db_column(:team_id).of_type(:integer).with_options(null: false) }
       it { is_expected.to have_db_column(:name).of_type(:string).with_options(limit: 100, null: false) }
       it { is_expected.to have_db_column(:birthday).of_type(:date).with_options(null: false) }
       it { is_expected.to have_db_column(:uniform_number).of_type(:integer).with_options(null: false) }
@@ -19,6 +19,8 @@ RSpec.describe Player, type: :model do
 
   describe 'associations' do
     it { is_expected.to belong_to(:team) }
+    it { is_expected.to have_many(:player_positions) }
+    it { is_expected.to have_many(:positions).through(:player_positions) }
   end
 
   describe 'attributes' do
@@ -32,30 +34,15 @@ RSpec.describe Player, type: :model do
   end
 
   describe 'validations' do
-    let(:player) { build(:player) }
-
-    it 'requires name' do
-      expect(player).to validate_presence_of(:name)
+    before do
+      create(:player)
     end
 
-    it 'requires limit 100 name' do
-      expect(player).to validate_length_of(:name).is_at_most(100)
-    end
-
-    it 'requires birthday' do
-      expect(player).to validate_presence_of(:birthday)
-    end
-
-    it 'requires uniform_number' do
-      expect(player).to validate_presence_of(:uniform_number)
-    end
-
-    it 'requires unique uniform_number scoped to team_id' do
-      expect(player).to validate_uniqueness_of(:uniform_number).scoped_to(:team_id)
-    end
-
-    it 'requires country_number' do
-      expect(player).to validate_presence_of(:country_number)
-    end
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_length_of(:name).is_at_most(100) }
+    it { is_expected.to validate_presence_of(:birthday) }
+    it { is_expected.to validate_presence_of(:uniform_number) }
+    it { is_expected.to validate_uniqueness_of(:uniform_number).scoped_to(:team_id) }
+    it { is_expected.to validate_presence_of(:country_number) }
   end
 end

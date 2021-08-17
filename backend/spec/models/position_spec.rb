@@ -16,7 +16,9 @@ RSpec.describe Position, type: :model do
   end
 
   describe 'associations' do
-    it { is_expected.to have_many(:position_roles) }
+    it { is_expected.to have_many(:position_roles).dependent(:restrict_with_exception) }
+    it { is_expected.to have_many(:player_positions) }
+    it { is_expected.to have_many(:players).through(:player_positions) }
   end
 
   describe 'attributes' do
@@ -30,30 +32,15 @@ RSpec.describe Position, type: :model do
   end
 
   describe 'validations' do
-    let(:position) { build(:position) }
-
-    it 'requires name' do
-      expect(position).to validate_presence_of(:name)
+    before do
+      create(:position)
     end
 
-    it 'requires limit 100 name' do
-      expect(position).to validate_length_of(:name).is_at_most(50)
-    end
-
-    it 'requires unique name' do
-      expect(position).to validate_uniqueness_of(:name)
-    end
-
-    it 'requires short name' do
-      expect(position).to validate_presence_of(:short_name)
-    end
-
-    it 'requires limit 50 short name' do
-      expect(position).to validate_length_of(:short_name).is_at_most(10)
-    end
-
-    it 'requires unique short name' do
-      expect(position).to validate_uniqueness_of(:short_name)
-    end
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_length_of(:name).is_at_most(50) }
+    it { is_expected.to validate_uniqueness_of(:name) }
+    it { is_expected.to validate_presence_of(:short_name) }
+    it { is_expected.to validate_length_of(:short_name).is_at_most(10) }
+    it { is_expected.to validate_uniqueness_of(:short_name) }
   end
 end

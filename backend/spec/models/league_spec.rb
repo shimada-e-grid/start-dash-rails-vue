@@ -15,7 +15,7 @@ RSpec.describe League, type: :model do
   end
 
   describe 'associations' do
-    it { is_expected.to have_many(:teams) }
+    it { is_expected.to have_many(:teams).dependent(:destroy) }
   end
 
   describe 'attributes' do
@@ -29,22 +29,13 @@ RSpec.describe League, type: :model do
   end
 
   describe 'validations' do
-    let(:league) { build(:league) }
-
-    it 'requires name' do
-      expect(league).to validate_presence_of(:name)
+    before do
+      create(:league)
     end
 
-    it 'requires unique name' do
-      expect(league).to validate_uniqueness_of(:name)
-    end
-
-    it 'requires limit 100 name' do
-      expect(league).to validate_length_of(:name).is_at_most(100)
-    end
-
-    it 'requires country_number' do
-      expect(league).to validate_presence_of(:country_number)
-    end
+    it { is_expected.to validate_presence_of(:country_number) }
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_uniqueness_of(:name) }
+    it { is_expected.to validate_length_of(:name).is_at_most(100) }
   end
 end
